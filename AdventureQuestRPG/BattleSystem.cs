@@ -8,7 +8,7 @@ namespace AdventureQuestRPG
 {
     public class BattleSystem
     {
-        public static void Attack(dynamic attacker, dynamic target)
+        public static void Attack(IBattleStates attacker, IBattleStates target)
         {
             int damage = Math.Max(0, attacker.AttackPower - target.Defense);
             target.Health = Math.Max(0, target.Health - damage);
@@ -17,7 +17,7 @@ namespace AdventureQuestRPG
             Console.WriteLine($"{attacker.Name} attacks {target.Name} for {damage} damage!");
             Console.WriteLine($"{target.Name}'s health is now {target.Health}.");
             Console.WriteLine($"================={attacker.Name} turn Finish==================");
-            Console.WriteLine($"***************************************************");
+            Console.WriteLine(" ");
 
 
         }
@@ -33,6 +33,7 @@ namespace AdventureQuestRPG
                 if (enemy.Health <= 0)
                 {
                     Console.WriteLine("Victory! The monster has been defeated.");
+                    Console.WriteLine(" ");
                     return;
                 }
 
@@ -42,6 +43,8 @@ namespace AdventureQuestRPG
                 if (player.Health <= 0)
                 {
                     Console.WriteLine("Defeat! The player has been slain.");
+                    Console.WriteLine(" ");
+
                     return;
                 }
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventureQuestRPG
 {
-    public class Player
+    public class Player : IBattleStates
     {
         public string Name { get; set; }
         public int Health { get; set; }
@@ -22,7 +22,7 @@ namespace AdventureQuestRPG
         }
     }
 
-    public abstract class Monster
+    public abstract class Monster : IBattleStates
     {
         public string Name { get; set; }
         public int Health { get; set; }
@@ -41,6 +41,22 @@ namespace AdventureQuestRPG
     public class Dragon : Monster
     {
         public Dragon(string name, int health, int attackPower, int defense)
+            : base(name, health, attackPower, defense) { }
+    }
+    public class BossMonster : Monster
+    {
+        public BossMonster(string name, int health, int attackPower, int defense)
+            : base(name, health, attackPower, defense) { }
+    }
+    public class Goblin : Monster
+    {
+        public Goblin(string name, int health, int attackPower, int defense)
+            : base(name, health, attackPower, defense) { }
+    }
+
+    public class Zombie : Monster
+    {
+        public Zombie(string name, int health, int attackPower, int defense)
             : base(name, health, attackPower, defense) { }
     }
 }

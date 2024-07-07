@@ -7,10 +7,10 @@ namespace AdventureQuestRPG
     {
         static void Main(string[] args)
         {
-            Player player = new Player("Hero", 100, 20, 10);
-            Monster monster = new Dragon("Dragon", 50, 15, 5);
+            Player player = new Player("Hero", 150, 20, 10);
+            Adventure adventure = new Adventure(player);
 
-            BattleSystem.StartBattle(player, monster);
+            adventure.Start();
 
             Console.WriteLine("Adventure complete!");
         }
