@@ -27,7 +27,7 @@ namespace AdventureQuestRPG
             {
                 new Dragon("Dragon", 200, 30, 15),
                 new Goblin("Goblin", 50, 10, 5),
-                new Zombie("Zombie", 100, 20, 10),
+                new Zombi("Zombi", 100, 20, 10),
                 new BossMonster("Boss Dragon", 500, 50, 25)
             };
         }
@@ -61,6 +61,10 @@ namespace AdventureQuestRPG
                     case "3":
                         Console.WriteLine("Ending the game.");
                         return;
+                    case "4":
+                        player.Inventory.DisplayInventory();
+                        UseItemFromInventory();
+                        break;
                 }
             }
         }
@@ -76,6 +80,7 @@ namespace AdventureQuestRPG
             Console.WriteLine("1. Move to a new location");
             Console.WriteLine("2. Encounter a monster");
             Console.WriteLine("3. End the game");
+            Console.WriteLine("4. View and use items from inventory");
         }
 
         private string GetPlayerChoice()
@@ -104,12 +109,10 @@ namespace AdventureQuestRPG
 
         private void EncounterMonster()
         {
-            Random rand = new Random();
             Monster monster = GetRandomMonster();
             Console.WriteLine($"A wild {monster.Name} appears!");
 
             BattleSystem.StartBattle(player, monster);
-
             if (player.Health > 0)
             {
                 Console.WriteLine("Battle is over. Choose your next action.");
@@ -126,18 +129,27 @@ namespace AdventureQuestRPG
             Random rand = new Random();
             Monster randomMonster = monsters[rand.Next(monsters.Count)];
 
-            // Create a new instance of the selected monster type to ensure a fresh monster
             if (randomMonster is Dragon)
                 return new Dragon("Dragon", 200, 30, 15);
             if (randomMonster is Goblin)
                 return new Goblin("Goblin", 50, 10, 5);
-            if (randomMonster is Zombie)
-                return new Zombie("Zombie", 100, 20, 10);
+            if (randomMonster is Zombi)
+                return new Zombi("Zombi", 100, 20, 10);
             if (randomMonster is BossMonster)
                 return new BossMonster("Boss Dragon", 500, 50, 25);
 
-            // Default case
             return new Goblin("Goblin", 50, 10, 5);
+        }
+
+        private void UseItemFromInventory()
+        {
+            Console.WriteLine("Enter the name of the item you want to use or 'exit' to cancel:");
+            string itemName = Console.ReadLine();
+
+            if (!string.Equals(itemName, "exit", StringComparison.OrdinalIgnoreCase))
+            {
+                player.UseItem(itemName);
+            }
         }
     }
 }

@@ -7,11 +7,9 @@ namespace AdventureQuestRPG
     {
         static void Main(string[] args)
         {
-            Player player = new Player("Hero", 150, 20, 10);
+            Player player = new Player("Hero");
             Adventure adventure = new Adventure(player);
-
             adventure.Start();
-
             Console.WriteLine("Adventure complete!");
         }
     }

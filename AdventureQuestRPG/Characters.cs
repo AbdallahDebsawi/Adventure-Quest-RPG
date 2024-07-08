@@ -12,13 +12,44 @@ namespace AdventureQuestRPG
         public int Health { get; set; }
         public int AttackPower { get; set; }
         public int Defense { get; set; }
+        public Inventory Inventory { get; set; }
 
-        public Player(string name, int health, int attackPower, int defense)
+        public Player(string name)
         {
             Name = name;
-            Health = health;
-            AttackPower = attackPower;
-            Defense = defense;
+            Health = 150;
+            AttackPower = 20;
+            Defense = 10;
+            Inventory = new Inventory();
+        }
+
+        public void UseItem(string itemName)
+        {
+            var item = Inventory.GetItem(itemName);
+            if (item == null)
+            {
+                Console.WriteLine("Item not found in inventory.");
+                return;
+            }
+
+            if (item is Potion potion)
+            {
+                Health += potion.HealthRestore;
+                Console.WriteLine($"You used a {potion.Name} and restored {potion.HealthRestore} health.");
+                Inventory.RemoveItem(potion);
+            }
+            else if (item is Weapon weapon)
+            {
+                AttackPower += weapon.AttackPower;
+                Console.WriteLine($"You equipped a {weapon.Name} and gained {weapon.AttackPower} attack power.");
+                Inventory.RemoveItem(weapon);
+            }
+            else if (item is Armor armor)
+            {
+                Defense += armor.Defense;
+                Console.WriteLine($"You equipped an {armor.Name} and gained {armor.Defense} defense.");
+                Inventory.RemoveItem(armor);
+            }
         }
     }
 
@@ -43,20 +74,22 @@ namespace AdventureQuestRPG
         public Dragon(string name, int health, int attackPower, int defense)
             : base(name, health, attackPower, defense) { }
     }
-    public class BossMonster : Monster
-    {
-        public BossMonster(string name, int health, int attackPower, int defense)
-            : base(name, health, attackPower, defense) { }
-    }
+
     public class Goblin : Monster
     {
         public Goblin(string name, int health, int attackPower, int defense)
             : base(name, health, attackPower, defense) { }
     }
 
-    public class Zombie : Monster
+    public class Zombi : Monster
     {
-        public Zombie(string name, int health, int attackPower, int defense)
+        public Zombi(string name, int health, int attackPower, int defense)
+            : base(name, health, attackPower, defense) { }
+    }
+
+    public class BossMonster : Monster
+    {
+        public BossMonster(string name, int health, int attackPower, int defense)
             : base(name, health, attackPower, defense) { }
     }
 }
